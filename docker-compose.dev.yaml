@@ -1,0 +1,16 @@
+name: anvia-dev
+
+services:
+  postgres:
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: anvia
+      POSTGRES_PASSWORD: anvia
+      POSTGRES_DB: anvia
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

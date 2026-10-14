@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #09090b;
+}
+
+/* The composer input is a Tiptap (ProseMirror) editor. Hide its browser focus ring. */
+.ProseMirror:focus,
+.tiptap:focus {
+  outline: none;
+}
+
+/* Smooth streaming: the Anvia renderer marks newly revealed text with
+   data-state="revealing"; fade it in. */
+@keyframes stream-fade-in {
+  from {
+    opacity: var(--anvia-stream-reveal-opacity, 0);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.message-markdown [data-state="revealing"] {
+  animation: stream-fade-in var(--anvia-stream-reveal-duration, 180ms) linear both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .message-markdown [data-state="revealing"] {
+    animation: none;
+    opacity: 1;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "anvia-fullstack",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:api": "pnpm --filter @anvia/api dev",
+    "dev:web": "pnpm --filter @anvia/web dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "evals:1": "pnpm -C packages/agents exec node --env-file-if-exists=../../.env --import tsx src/evals/working-time.ts",
+    "evals:2": "pnpm -C packages/agents exec node --env-file-if-exists=../../.env --import tsx src/evals/leave.ts",
+    "evals:3": "pnpm -C packages/agents exec node --env-file-if-exists=../../.env --import tsx src/evals/payroll.ts",
+    "evals:4": "pnpm -C packages/agents exec node --env-file-if-exists=../../.env --import tsx src/evals/benefits-employment.ts",
+    "evals": "pnpm run evals:1 && pnpm run evals:2 && pnpm run evals:3 && pnpm run evals:4"
+  }
+}
