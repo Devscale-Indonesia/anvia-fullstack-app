@@ -2,7 +2,6 @@ import type { McpServer } from "@anvia/mcp";
 import { Agent, type AgentStream, type MemoryScope, type MemoryStore, type Message, type UserMessage } from "@anvia/core";
 import { BASE_INSTRUCTIONS } from "./instructions";
 import { getModel, getProviderOptions, DEFAULT_MODEL_ID } from "./models";
-import { staticContext } from "./context/document";
 import { getLens } from "./lens";
 import { readWebpageTool } from "./tools/read-webpage";
 import { searchWebTool } from "./tools/search-web";
@@ -28,7 +27,6 @@ export function runAgent(options: RunAgentOptions): AgentStream<string> {
     model: getModel(modelId),
     providerOptions: getProviderOptions(modelId),
     instructions: BASE_INSTRUCTIONS,
-    context: staticContext,
     tools: [searchWebTool, readWebpageTool],
     mcpServers: options.mcpServers,
     maxTurns: options.maxTurns ?? 25,

@@ -2,19 +2,18 @@
 
 A full-stack AI agent app, built for **Devscale Indonesia — AI Product Engineering, Batch 2**.
 
-The app is a business assistant for **PT Maju Jaya Sakti**, a fictional company. Employees ask in Indonesian or English about HR topics (leave, payroll, BPJS, working hours) and about business data (products, stock, customers, vendors, orders). The agent answers HR questions from company policy and Indonesian labor rules, reads and updates business data through the ERP MCP server, searches the web when it needs current figures, and remembers each conversation. It asks for confirmation before it changes any ERP record.
+The app is a business assistant for **PT Maju Jaya Sakti**, a fictional company. Employees ask in Indonesian or English about business data: products, stock, customers, vendors, and sales and purchase orders. The agent reads and updates that data through the ERP MCP server, searches the web for public information, and remembers each conversation. It asks for confirmation before it changes any ERP record.
 
-> All company policies and labor-rule figures in this repo are **mock data for teaching**. Do not use them for real HR or legal decisions.
+> The company and the ERP data are a **mock for teaching**. Do not use this app for real business decisions.
 
 ## What you will learn
 
 - Structuring a **pnpm workspace** monorepo with apps and shared packages.
-- Building an agent with **`@anvia/core`**: instructions, static context, tools, and a model.
+- Building an agent with **`@anvia/core`**: instructions, tools, MCP servers, and a model.
 - Calling models through **OpenRouter** (OpenAI-compatible client) or directly through **Anthropic**, and letting the user pick one in the UI.
 - Streaming agent output from a **Hono** API to a **React** UI with `@anvia/server`, `@anvia/client`, `@anvia/react`, and `@anvia/react-ui`.
 - Saving conversations per session with **`@anvia/memory-prisma`**, **Prisma 8**, and **Postgres 16**.
-- Measuring answer quality with **evals**: an LLM judge, answer relevancy, and regex checks.
-- Tracing agent runs and eval results with **Anvia Lens**.
+- Tracing agent runs with **Anvia Lens**.
 
 ## Architecture
 
@@ -51,9 +50,7 @@ Agent (packages/agents)
 │   │       ├── instructions.ts   System prompt
 │   │       ├── lens.ts           Anvia Lens client
 │   │       ├── mcp.ts            Connects the MCP servers in mcp.json
-│   │       ├── context/          Static documents (company policy, labor rules)
-│   │       ├── tools/            search-web, read-webpage (Tavily)
-│   │       └── evals/            4 eval files, 5 cases each
+│   │       └── tools/            search-web, read-webpage (Tavily)
 │   └── db/                   Prisma 8 contract and database client
 │       ├── prisma/schema.prisma  Contract (memory models)
 │       └── src/index.ts          exports `db`
@@ -126,12 +123,11 @@ Agent (packages/agents)
 `runAgent()` in `src/agent.ts` puts the pieces together:
 
 - **Model**: `MODEL_OPTIONS` in `src/models.ts` lists the models a user can choose. `openai` (default) is `openai/gpt-6-luna`: `getModel()` points the `@anvia/openai` client at OpenRouter's OpenAI-compatible endpoint. `anthropic` is `claude-haiku-5-5`, called directly with `@anvia/anthropic`. To add a model, add an entry to `MODEL_OPTIONS`.
-- **Instructions**: `src/instructions.ts` defines the business assistant's role, source priority, and rules (no invented policies or ERP data, confirm before changing records, no sensitive personal data).
-- **Context**: `src/context/` holds static `Document`s attached to every run: company policies and Indonesian labor rules.
-- **Tools**: `search_web` and `read_webpage` use Tavily. The agent uses them only for current figures the context does not cover.
+- **Instructions**: `src/instructions.ts` defines the business assistant's role, source priority, and rules (no invented ERP data, confirm before changing records, no HR questions, no sensitive personal data).
+- **Tools**: `search_web` and `read_webpage` use Tavily. The agent uses them only for public information the ERP does not cover.
 - **Memory** (optional): with `memory: { store, session }`, the agent sends only the latest user message. The store supplies earlier turns.
 - **MCP tools**: the API connects the servers in `mcp.json` (see below) and passes them to `runAgent({ mcpServers })`.
-- **Prompt caching**: for the Anthropic model, `getProviderOptions()` sends a top-level `cache_control`, so the instructions, context and tool definitions are cached between requests.
+- **Prompt caching**: for the Anthropic model, `getProviderOptions()` sends a top-level `cache_control`, so the instructions and tool definitions are cached between requests.
 - **Tracing**: every run is recorded in Anvia Lens with `captureMode: "full"`, which includes prompt and response text.
 
 `runAgent()` returns `agent.stream()`, an async iterable of events.
@@ -195,26 +191,6 @@ The app can run on a server and be served inside your tailnet with `tailscale se
 
 `vite preview` serves the build on port 4173 and proxies `/api` to the API (see `preview` in `apps/web/vite.config.ts`). It allows `*.ts.net` hostnames.
 
-## Evals
-
-The eval cases test the agent against the mock context. There are 4 files with 5 cases each, in `packages/agents/src/evals/`:
-
-| Command | File | Topic |
-|---|---|---|
-| `pnpm run evals:1` | `working-time.ts` | Working hours and overtime |
-| `pnpm run evals:2` | `leave.ts` | Leave |
-| `pnpm run evals:3` | `payroll.ts` | Payroll, THR, minimum wage |
-| `pnpm run evals:4` | `benefits-employment.ts` | BPJS, probation, resignation |
-| `pnpm run evals` | all of the above | Stops at the first file that fails |
-
-Each case is scored with three metrics:
-
-- **correctness**: `gEval`, an LLM judge with a 0–10 rubric that compares the answer with `expected`. It passes at 0.7.
-- **answer_relevancy**: an LLM check that the answer addresses the question. It passes at 0.7.
-- **contains_numbers**: a regex from `metadata.pattern` that the answer must match, such as `\b14\b`. No LLM is involved.
-
-Each file sends its results to Anvia Lens through `runEvalCli({ reporters })`.
-
 ## Useful commands
 
 | Command | What it does |
@@ -223,7 +199,6 @@ Each file sends its results to Anvia Lens through `runEvalCli({ reporters })`.
 | `pnpm run dev:web` | Start the web app |
 | `pnpm run typecheck` | Typecheck every package |
 | `pnpm run build` | Build every package |
-| `pnpm run evals` | Run all evals |
 | `pnpm -C packages/db db:emit` | Regenerate contract artifacts |
 | `pnpm -C packages/db db:init` | Create the tables in Postgres |
 | `docker compose -f docker-compose.dev.yaml down` | Stop Postgres (data is kept in a volume) |
@@ -244,8 +219,8 @@ Each file sends its results to Anvia Lens through `runEvalCli({ reporters })`.
 
 ## Exercises
 
-1. Add a tool, such as a leave-balance calculator, and register it in `runAgent()`.
-2. Add a new eval case that the agent currently fails, then improve the instructions or context until it passes.
+1. Add a tool, such as a low-stock alert, and register it in `runAgent()`.
+2. Add a second MCP server to `mcp.json`.
 3. Replace `default-user` with a real user ID sent from the client.
 4. Add a "Delete chat" action to the sidebar.
-5. Route questions to different agents (HR, finance, operations). See the comment in the `/chat` route.
+5. Route questions to different agents (sales, purchasing, finance). See the comment in the `/chat` route.

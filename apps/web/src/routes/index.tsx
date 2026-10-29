@@ -43,7 +43,7 @@ function NewChat() {
               value={text}
               onChange={(event) => setText(event.target.value)}
               className="flex-1 bg-transparent px-3 py-2 leading-6 text-zinc-100 outline-none placeholder:text-zinc-500"
-              placeholder="Ask about leave, payroll, stock, orders..."
+              placeholder="Ask about stock, orders, customers..."
             />
             <button
               type="submit"
