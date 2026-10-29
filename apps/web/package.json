@@ -10,10 +10,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@anvia/client": "^1.4.4",
-    "@anvia/core": "^1.14.1",
-    "@anvia/react": "^1.1.4",
-    "@anvia/react-ui": "^1.1.7",
+    "@anvia/client": "^1.6.0",
+    "@anvia/core": "^1.17.2",
+    "@anvia/react": "^1.1.5",
+    "@anvia/react-ui": "^1.2.2",
     "@tanstack/react-router": "^1.170.44",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"

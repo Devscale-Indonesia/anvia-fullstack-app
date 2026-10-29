@@ -14,20 +14,20 @@ importers:
         specifier: workspace:*
         version: link:../../packages/agents
       '@anvia/client':
-        specifier: ^1.4.4
-        version: 1.4.4(@anvia/core@1.14.1(zod@4.6.7))
+        specifier: ^1.6.0
+        version: 1.6.0(@anvia/core@1.17.2(zod@4.6.7))
       '@anvia/core':
-        specifier: ^1.14.1
-        version: 1.14.1(zod@4.6.7)
+        specifier: ^1.17.2
+        version: 1.17.2(zod@4.6.7)
       '@anvia/db':
         specifier: workspace:*
         version: link:../../packages/db
       '@anvia/memory-prisma':
-        specifier: 1.2.2
-        version: 1.2.2(@anvia/core@1.14.1(zod@4.6.7))
+        specifier: 1.3.0
+        version: 1.3.0(@anvia/core@1.17.2(zod@4.6.7))
       '@anvia/server':
-        specifier: ^1.3.4
-        version: 1.3.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))
+        specifier: ^1.3.5
+        version: 1.3.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))
       '@hono/node-server':
         specifier: ^2.1.5
         version: 2.1.5(hono@4.13.13)
@@ -54,17 +54,17 @@ importers:
   apps/web:
     dependencies:
       '@anvia/client':
-        specifier: ^1.4.4
-        version: 1.4.4(@anvia/core@1.14.1(zod@4.6.7))
+        specifier: ^1.6.0
+        version: 1.6.0(@anvia/core@1.17.2(zod@4.6.7))
       '@anvia/core':
-        specifier: ^1.14.1
-        version: 1.14.1(zod@4.6.7)
+        specifier: ^1.17.2
+        version: 1.17.2(zod@4.6.7)
       '@anvia/react':
-        specifier: ^1.1.4
-        version: 1.1.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/core@1.14.1(zod@4.6.7))(react@19.3.0)
+        specifier: ^1.1.5
+        version: 1.1.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/core@1.17.2(zod@4.6.7))(react@19.3.0)
       '@anvia/react-ui':
-        specifier: ^1.1.7
-        version: 1.1.7(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/react@1.1.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/core@1.14.1(zod@4.6.7))(react@19.3.0))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.32.0(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))(@tiptap/pm@3.32.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: ^1.2.2
+        version: 1.2.2(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/react@1.1.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/core@1.17.2(zod@4.6.7))(react@19.3.0))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.32.0(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))(@tiptap/pm@3.32.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@tanstack/react-router':
         specifier: ^1.170.44
         version: 1.170.44(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -103,14 +103,14 @@ importers:
   packages/agents:
     dependencies:
       '@anvia/core':
-        specifier: ^1.14.1
-        version: 1.14.1(zod@4.6.7)
+        specifier: ^1.17.2
+        version: 1.17.2(zod@4.6.7)
       '@anvia/lens':
-        specifier: ^1.2.3
-        version: 1.2.3(@anvia/core@1.14.1(zod@4.6.7))(@opentelemetry/api@1.9.1)
+        specifier: ^1.2.4
+        version: 1.2.4(@anvia/core@1.17.2(zod@4.6.7))(@opentelemetry/api@1.9.1)
       '@anvia/openai':
-        specifier: ^1.3.0
-        version: 1.3.0(@anvia/core@1.14.1(zod@4.6.7))(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7)
+        specifier: ^1.3.6
+        version: 1.3.6(@anvia/core@1.17.2(zod@4.6.7))(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7)
       '@tavily/core':
         specifier: ^0.7.14
         version: 0.7.14(debug@4.4.3)
@@ -188,80 +188,89 @@ packages:
       react-devtools-core:
         optional: true
 
-  '@anvia/client@1.4.4':
-    resolution: {integrity: sha512-fZ9AGokC5pGBmAfJpjqjOAWVsAFDQfm00d8a++WeFLB9MBCs3e/+Wfik1OiRSvJqp2WuE/KF1bqZIpN9fA6P9A==}
+  '@anvia/client@1.6.0':
+    resolution: {integrity: sha512-5GF2S3lAFiQZp16wLIudKohoo60w5ZJ23dKNLnTwoVs8yxteAyAHZLwjrrDjzKWMZqRYyBNHMOXw/LmCar4hKQ==}
     peerDependencies:
-      '@anvia/core': ^1.14.1
+      '@anvia/core': ^1.17.0
       '@anvia/durable': ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0
     peerDependenciesMeta:
       '@anvia/durable':
         optional: true
 
-  '@anvia/core@1.14.1':
-    resolution: {integrity: sha512-6TRpoy+BP3vc6Yk3Mp01BBjLp83pbiCG/1PI/0dzZruO98LmF9nmi6hFljlZDmiNENQo6vVU6e2NJbZY/AdNQA==}
+  '@anvia/core@1.17.2':
+    resolution: {integrity: sha512-DoNv3tRVPdxHr34DtFnRXYFtdvDaTwX445W7AMk7zW4IuVN7Bs6OlqaiXzDQu2e+Ekz0ipOZn0w/CsUcxBArRA==}
     peerDependencies:
       '@valibot/to-json-schema': ^1.8.0
-      zod: ^4.6.5
+      zod: ^4.6.7
     peerDependenciesMeta:
       '@valibot/to-json-schema':
         optional: true
 
-  '@anvia/lens@1.2.3':
-    resolution: {integrity: sha512-vRcZtOcdBm52RyOadErB+JDNOHoccXtYAtDr8m0b4rVePiJpEcsLTVAcpvb5TqVG1S5pyz2MYWL22KN7JBJ0WA==}
+  '@anvia/lens@1.2.4':
+    resolution: {integrity: sha512-aH/NQyqoXD5202STB38u+UySO0zRLYjDnSmf90DPDUQLBNHP6V5qxqZO5p1B4K4HRfOy+ldDQ9zFgQLFYj06bA==}
     engines: {node: '>=24'}
     peerDependencies:
       '@anvia/core': ^1.14.1
 
-  '@anvia/memory-prisma@1.2.2':
-    resolution: {integrity: sha512-CnJc80/MqoZ6RnQSGw2gsri/tx7yYSLHdbvb6p6CpAM+TRKpjHnpSiBjLyN/d+bTquHMsfQWlAvMkYamA0B5eg==}
+  '@anvia/memory-prisma@1.3.0':
+    resolution: {integrity: sha512-Cz9/KqPNkD0I6TtrVYjW2CiWAOKb90dcY8JC4Fo3KjtqGtab1UUeZ3wSCmYJDNTjANTrWco5mBL9cOwc/Y4eMg==}
     hasBin: true
     peerDependencies:
-      '@anvia/core': ^1.6.1
+      '@anvia/core': ^1.17.2
       '@prisma/client': '>=7.10.0 <8.0.0'
-      '@prisma/orm-postgres': 8.0.0-rc.11
+      '@prisma/orm-postgres': 8.0.0-rc.20
     peerDependenciesMeta:
       '@prisma/client':
         optional: true
       '@prisma/orm-postgres':
         optional: true
 
-  '@anvia/openai@1.3.0':
-    resolution: {integrity: sha512-fj4leLSBkbpfu7nmBFaZsafeEtgbe0YJDmXJu+fn5eCP0IThVp4dxqJq+aQ9vjKIiC6RKJM0xoUda8Sy0pHj3A==}
+  '@anvia/openai@1.3.6':
+    resolution: {integrity: sha512-BnJu3No5DhSPBtN+9tizGJbYfV7Bz1dPJdHM/E6oA7aZWu78JoQ8YPQdHm9Jep23i/8vX7oK00hhpI53cYjhxw==}
     peerDependencies:
-      '@anvia/core': ^1.10.0
+      '@anvia/core': ^1.17.2
 
-  '@anvia/otel@1.3.0':
-    resolution: {integrity: sha512-Der4PpRgJB1bGMZfcRWBF8GjGoTJ+WCM0eGmD2qSh+Y5cL0cbjI9kE1vGOXx+oI+kZkUjN8wd+AIsLviI9XvcQ==}
+  '@anvia/otel@1.3.1':
+    resolution: {integrity: sha512-BLl7cqvgNqBbpxXkOqEgYueklcDZbRwD0Gv3mJvU6HN7TBEVrvvKSaw6rpMXvy+4UhZOHgRNwhU+4ELYivnUuQ==}
     peerDependencies:
       '@anvia/core': ^1.14.1
 
-  '@anvia/react-ui@1.1.7':
-    resolution: {integrity: sha512-XGryNsznwxtw/oQqItpSTDN68T3gr+UkQ2LbTKfzIZJaPt03+HUvN62b+BsM8BhVkB4EJkn9/FTMCpTQOqG3kg==}
+  '@anvia/react-ui@1.2.2':
+    resolution: {integrity: sha512-jFsVgiDqgQi2ARiKXuBDcpdpNQR75CPQ0Ee96t+GG8q8RZ6jAz0XID5FVc65y8ARHjLaSZEZGdGyjpt6xFANMA==}
     peerDependencies:
-      '@anvia/client': ^1.2.1
-      '@anvia/graph': ^1.1.5
-      '@anvia/react': ^1.1.4
+      '@anvia/client': ^1.6.0
+      '@anvia/graph': ^1.1.6
+      '@anvia/react': ^1.1.5
+      '@novnc/novnc': '>=1.5.0'
+      '@xterm/addon-fit': '>=0.10.0'
+      '@xterm/xterm': '>=5.5.0'
       react: '>=18'
       react-dom: '>=18'
     peerDependenciesMeta:
       '@anvia/graph':
         optional: true
+      '@novnc/novnc':
+        optional: true
+      '@xterm/addon-fit':
+        optional: true
+      '@xterm/xterm':
+        optional: true
 
-  '@anvia/react@1.1.4':
-    resolution: {integrity: sha512-2nhyFgurTWYjNYR4/0cogiXs4wrGxDgBRYa/svkCadXIz4ph4BbRCSWDwezUonXulJa/miwpUi/zIFBkP8QQ+g==}
+  '@anvia/react@1.1.5':
+    resolution: {integrity: sha512-5POy5K75x35/8Lux8MoOLwiVh4y74zjCHON3EQz1cmFTaBgbYyL4Gv0mxPBK4Ox7cYKxj/HCh8yMlGaAK2ZLRg==}
     peerDependencies:
-      '@anvia/client': ^1.2.1
-      '@anvia/core': ^1.6.1
+      '@anvia/client': ^1.6.0
+      '@anvia/core': ^1.17.0
       '@anvia/graph': ^1.1.5
       react: '>=18'
     peerDependenciesMeta:
       '@anvia/graph':
         optional: true
 
-  '@anvia/server@1.3.4':
-    resolution: {integrity: sha512-UWVLTUkl6q2pL+DfbqO0fIq7/igN9wnw/YYkCA3n7Gltz9iG6wlviPR7h/7Hx78mvtEs4uSv3m/VzMv3g3qG/A==}
+  '@anvia/server@1.3.5':
+    resolution: {integrity: sha512-aYsn+YzHT4ywy7d0DMF5+kdkgqBUFzjPgXzHPw+oDjoYd6YTtDzjEbggIlYBmels3vC0UzQuGU++B7Isd8g48g==}
     peerDependencies:
-      '@anvia/client': ^1.4.4
+      '@anvia/client': ^1.6.0
       '@anvia/durable': ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0
     peerDependenciesMeta:
       '@anvia/durable':
@@ -1088,8 +1097,8 @@ packages:
     resolution: {integrity: sha512-da6KbdNCV5sr1/txD896V+6W0iamFWrvVl8cHkBSPT+YlvmT3DwXa4jxZnQc+gnuTEqSWbBeoSZYTayXH9wXcw==}
     engines: {node: '>= 20'}
 
-  '@opentelemetry/api-logs@0.222.0':
-    resolution: {integrity: sha512-9mb1If+IF6u0ZVXkHQ6ogEae5HwA6ajIVUgpSDQyRASxft6BSXHvBvPooRle3yFN/fKnCdSOnuu0OC3PLcF6+g==}
+  '@opentelemetry/api-logs@0.223.0':
+    resolution: {integrity: sha512-Oepm6etVPFCn0VWB1t833iOTgz1eYBDUPxcrOR/XvwzD1+Ag9VzSPSrrKAFNJ/haatj+8CXbG47pZXvdNQKDJw==}
     engines: {node: '>=8.0.0'}
 
   '@opentelemetry/api@1.9.1':
@@ -1102,47 +1111,35 @@ packages:
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
-  '@opentelemetry/core@2.11.0':
-    resolution: {integrity: sha512-7YP44XH0tV6+Mb54x2YGf84i7yi+31MBZlE8JwvozkxyTvXbSp10X7cI7YE49ChJ3shMJoBmCJF3+1QFBJctGA==}
-    engines: {node: ^18.19.0 || >=20.6.0}
-    peerDependencies:
-      '@opentelemetry/api': '>=1.0.0 <1.10.0'
-
   '@opentelemetry/core@2.12.0':
     resolution: {integrity: sha512-1HsSAuvT4/my0QrXWsyXFdWjKaPeCHsismKZgEEIb8NK13LP6DrMRlsUbvD/0F9mDWK3xDom9AMv3IscxgOnOQ==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
 
-  '@opentelemetry/exporter-logs-otlp-http@0.222.0':
-    resolution: {integrity: sha512-GqwLZohJTf/sttYlOpT1oFTJ9ScYaKnk0sOx4Qe/+KmXYVOa+v94cfnkUkFKDuvTODWhCL50Hz3gvsZD6ngQpg==}
+  '@opentelemetry/exporter-logs-otlp-http@0.223.0':
+    resolution: {integrity: sha512-YQh9+t/JmV9OeRkoLhPb4yvcrWCX6lAOmXFos/JKoD+KITZYZoxf0acnwAk6YDI9O7fX68O2ka38hx1G9exl8w==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
 
-  '@opentelemetry/exporter-trace-otlp-http@0.222.0':
-    resolution: {integrity: sha512-RCnPWcHppwiquQ+cV3nWvNwdf0MG1w26e5jewW2T83nTZOlXgcg88sY9ulCVgagGHcq1mj0L0GP6YHgzk2v8oA==}
+  '@opentelemetry/exporter-trace-otlp-http@0.223.0':
+    resolution: {integrity: sha512-N8NWZaoQuF9e307S6xoVoI1lvxOOFkmBnynD42r02CPCfxoC95cJExAKBFrTD4C5iuhqthbzOZJN/W29ez4o/A==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
 
-  '@opentelemetry/otlp-exporter-base@0.222.0':
-    resolution: {integrity: sha512-YbywG3veEm2Fb6TbdxRkuquWob6eVWXuA8/Ba1tXz9jHfUqpdE3keilOHEtPboC4CvS1bjeeVfNkWGOOrLj+lw==}
+  '@opentelemetry/otlp-exporter-base@0.223.0':
+    resolution: {integrity: sha512-HlJMrJXjOqdQeoYNDHEvFTpaY2p9uWDK1GPl5AZ4wI5easzfoppTduOv47M8eiF+4ew42vfI/Xvt7THYgESnRw==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
 
-  '@opentelemetry/otlp-transformer@0.222.0':
-    resolution: {integrity: sha512-/F3BZ89+CJQnZkMh2tCrtcdB+XT2Dxhj4FFE+WPQ//413hmFL0/RfEX6vgOIWGhiSzrkHWTK3+6SiT7K5/g/jQ==}
+  '@opentelemetry/otlp-transformer@0.223.0':
+    resolution: {integrity: sha512-oxmmPL5/MbSsO8K588V9n/XLIe7FZTK30Fo+/U/lAnt0ZIK/hoPM03n2WpSTZVbUBGTUE7aLyxnAzh7nE2PD4Q==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': ^1.3.0
-
-  '@opentelemetry/resources@2.11.0':
-    resolution: {integrity: sha512-Ie7+8q8MDF4FAEQCKVMTx3ReUvxiIAgIiiW3c9JdmP8+HMcDy20puT+AHjexnExgnbvBxjQ9fjkFDWrikJ2jQA==}
-    engines: {node: ^18.19.0 || >=20.6.0}
-    peerDependencies:
-      '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
   '@opentelemetry/resources@2.12.0':
     resolution: {integrity: sha512-+rSRoOdln6NhXTVcBdHSlZxJDNzwxadeweK2ltZO3tVtfp6aklABc06xclDk6ovRR+EiGgIcSbh/6NgjFhnb3A==}
@@ -1150,14 +1147,14 @@ packages:
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
-  '@opentelemetry/sdk-logs@0.222.0':
-    resolution: {integrity: sha512-+19YHODIjaUCArxleaJtuufFZVpz/xvvK+VllQqE+W8hHolxdoRwHfK/s667zezwh1hkx6FFF+oYzetYgqK+Bg==}
+  '@opentelemetry/sdk-logs@0.223.0':
+    resolution: {integrity: sha512-ApiAfUiUh6fmJt1GbsBuoeDn8D8IL42UvGyPUr8o1Z89ZeIiOCE1rZ78KkIUjEX3OV8Oorl9ez5Qjo43ZynDyw==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.4.0 <1.10.0'
 
-  '@opentelemetry/sdk-metrics@2.11.0':
-    resolution: {integrity: sha512-7GXXcObyHyDUUSG+L+kJoquty01bzm7ivE7+SSgXXJcHuPzGviptxwARmI2c+bnnxjexGQbJnyNlN8HxBP/Y7A==}
+  '@opentelemetry/sdk-metrics@2.12.0':
+    resolution: {integrity: sha512-mVMaEHwCUJuY3S4Esn+nT0yQA3qCEGh+SOPJsXygU0Gl453WcsDNjtEa8EfdewMwoLyr1tlofB4fXytVpiXuow==}
     engines: {node: ^18.19.0 || >=20.6.0}
     peerDependencies:
       '@opentelemetry/api': '>=1.9.0 <1.10.0'
@@ -1165,20 +1162,16 @@ packages:
   '@opentelemetry/sdk-trace-base@2.12.0':
     resolution: {integrity: sha512-JOERgZCxRM06FEJ5kEWxlSRChah6MmXDx3KwCruqEv/iEyLkTokCSemf2y1w8oIHtfrr8EVTpzebq/31vn2Cpg==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
   '@opentelemetry/sdk-trace-node@2.12.0':
     resolution: {integrity: sha512-9DufH1IlmQMoKAfot5y/FhTP1RnmhLb5K6eKmJO/bvzPjYwPAazoiAUbTZFdPbqxOXN0FEbhZx/e6SB1Og4jmg==}
     engines: {node: ^18.19.0 || >=20.6.0}
+    deprecated: Use @opentelemetry/sdk-trace package
     peerDependencies:
       '@opentelemetry/api': '>=1.0.0 <1.10.0'
-
-  '@opentelemetry/sdk-trace@2.11.0':
-    resolution: {integrity: sha512-fFnTqGm8/G73GQVnxYi7LXa1ZVYEUvgL6XI1LpvV0bPC7WQ/ZGgKxCSl8FnlZBKto9JHHEFTO6s6CUpvvtwFrA==}
-    engines: {node: ^18.19.0 || >=20.6.0}
-    peerDependencies:
-      '@opentelemetry/api': '>=1.3.0 <1.10.0'
 
   '@opentelemetry/sdk-trace@2.12.0':
     resolution: {integrity: sha512-ImVuRQ6faOsTi1Wna88s2avgrrf/iDgXPigIeynkUhjstMuoQUDOJXgkez2j1mlU4btjXcXBGa+q7qKFYR3GsA==}
@@ -2886,8 +2879,8 @@ packages:
   markdown-table@3.0.4:
     resolution: {integrity: sha512-wiYz4+JrLyb/DqW2hkFJxP7Vd7JuTDm77fvbM8VfEQdmSMqcImWeeRbHwZjBjIFki/VaMK2BhFi7oUUZeM5bqw==}
 
-  marked@18.1.1:
-    resolution: {integrity: sha512-zEGgrtUG8crk+TrMacJSVABU4DYDDkS8uqgU3ohrn/2fW9C2AEfUrO3m6IhpIpQpl7YcVpiXXC9cSMWDANT3dg==}
+  marked@18.1.2:
+    resolution: {integrity: sha512-DfOnvLAQ6WYeWxWO1u4RyFOeqyHup6dks5PPqnoFiooU7ipRvidO/2j8plhAHIiZg574E9ZlzSjUiPMLAzFkgg==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -3096,13 +3089,14 @@ packages:
     resolution: {integrity: sha512-++Zlftm0kVLPmzC06t6epuWmcRMDbI4z5P3NNX979WA/k23+NtSOynEGzsVfZwguKw2mi5umVgnBlJQMwRz4Pg==}
     engines: {node: '>=20'}
 
-  openai@7.32.0:
-    resolution: {integrity: sha512-avqxu/jl1gsVBCBgFNPr9sTh+wZppQphuhhFy1zEvAJxEaJ4t0ery6hZdOT9kws/EcNTARoQcZs2IT3bliE1SA==}
+  openai@7.45.1:
+    resolution: {integrity: sha512-mutrJXwhJIMZ24Lab2COFtNp44OcpZSnV4O2O7q38wAHUa2m2fQqUO5pj1XS3PqLfOTeODBUS9YoadqDnnGk5A==}
     engines: {node: '>=22.0.0'}
     peerDependencies:
       '@aws-sdk/credential-provider-node': '>=3.972.0 <4'
       '@smithy/hash-node': '>=4.3.0 <5'
       '@smithy/signature-v4': '>=5.4.0 <6'
+      google-auth-library: '>=9.15.1 <12'
       undici: '>=5 <9'
       ws: ^8.21.0
       zod: ^3.25 || ^4.0
@@ -3112,6 +3106,8 @@ packages:
       '@smithy/hash-node':
         optional: true
       '@smithy/signature-v4':
+        optional: true
+      google-auth-library:
         optional: true
       undici:
         optional: true
@@ -3894,54 +3890,55 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7))':
+  '@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7))':
     dependencies:
-      '@anvia/core': 1.14.1(zod@4.6.7)
+      '@anvia/core': 1.17.2(zod@4.6.7)
 
-  '@anvia/core@1.14.1(zod@4.6.7)':
+  '@anvia/core@1.17.2(zod@4.6.7)':
     dependencies:
       yaml: 2.9.1
       zod: 4.6.7
 
-  '@anvia/lens@1.2.3(@anvia/core@1.14.1(zod@4.6.7))(@opentelemetry/api@1.9.1)':
+  '@anvia/lens@1.2.4(@anvia/core@1.17.2(zod@4.6.7))(@opentelemetry/api@1.9.1)':
     dependencies:
-      '@anvia/core': 1.14.1(zod@4.6.7)
-      '@anvia/otel': 1.3.0(@anvia/core@1.14.1(zod@4.6.7))
-      '@opentelemetry/exporter-logs-otlp-http': 0.222.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/exporter-trace-otlp-http': 0.222.0(@opentelemetry/api@1.9.1)
+      '@anvia/core': 1.17.2(zod@4.6.7)
+      '@anvia/otel': 1.3.1(@anvia/core@1.17.2(zod@4.6.7))
+      '@opentelemetry/exporter-logs-otlp-http': 0.223.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/exporter-trace-otlp-http': 0.223.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/resources': 2.12.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-logs': 0.222.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-logs': 0.223.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.12.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-node': 2.12.0(@opentelemetry/api@1.9.1)
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
-  '@anvia/memory-prisma@1.2.2(@anvia/core@1.14.1(zod@4.6.7))':
+  '@anvia/memory-prisma@1.3.0(@anvia/core@1.17.2(zod@4.6.7))':
     dependencies:
-      '@anvia/core': 1.14.1(zod@4.6.7)
+      '@anvia/core': 1.17.2(zod@4.6.7)
 
-  '@anvia/openai@1.3.0(@anvia/core@1.14.1(zod@4.6.7))(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7)':
+  '@anvia/openai@1.3.6(@anvia/core@1.17.2(zod@4.6.7))(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7)':
     dependencies:
-      '@anvia/core': 1.14.1(zod@4.6.7)
-      openai: 7.32.0(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7)
+      '@anvia/core': 1.17.2(zod@4.6.7)
+      openai: 7.45.1(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7)
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-node'
       - '@smithy/hash-node'
       - '@smithy/signature-v4'
+      - google-auth-library
       - undici
       - ws
       - zod
 
-  '@anvia/otel@1.3.0(@anvia/core@1.14.1(zod@4.6.7))':
+  '@anvia/otel@1.3.1(@anvia/core@1.17.2(zod@4.6.7))':
     dependencies:
-      '@anvia/core': 1.14.1(zod@4.6.7)
+      '@anvia/core': 1.17.2(zod@4.6.7)
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/api-logs': 0.222.0
+      '@opentelemetry/api-logs': 0.223.0
 
-  '@anvia/react-ui@1.1.7(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/react@1.1.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/core@1.14.1(zod@4.6.7))(react@19.3.0))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.32.0(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))(@tiptap/pm@3.32.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@anvia/react-ui@1.2.2(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/react@1.1.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/core@1.17.2(zod@4.6.7))(react@19.3.0))(@floating-ui/dom@1.8.0)(@tiptap/extensions@3.32.0(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))(@tiptap/pm@3.32.0))(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
-      '@anvia/client': 1.4.4(@anvia/core@1.14.1(zod@4.6.7))
-      '@anvia/react': 1.1.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/core@1.14.1(zod@4.6.7))(react@19.3.0)
+      '@anvia/client': 1.6.0(@anvia/core@1.17.2(zod@4.6.7))
+      '@anvia/react': 1.1.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/core@1.17.2(zod@4.6.7))(react@19.3.0)
       '@radix-ui/react-slot': 1.5.0(@types/react@19.3.0)(react@19.3.0)
       '@tiptap/core': 3.32.0(@tiptap/pm@3.32.0)
       '@tiptap/extension-document': 3.32.0(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))
@@ -3953,7 +3950,7 @@ snapshots:
       '@tiptap/pm': 3.32.0
       '@tiptap/react': 3.32.0(@floating-ui/dom@1.8.0)(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))(@tiptap/pm@3.32.0)(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@tiptap/suggestion': 3.32.0(@floating-ui/dom@1.8.0)(@tiptap/core@3.32.0(@tiptap/pm@3.32.0))(@tiptap/pm@3.32.0)
-      marked: 18.1.1
+      marked: 18.1.2
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
       react-markdown: 10.1.0(@types/react@19.3.0)(react@19.3.0)
@@ -3965,15 +3962,15 @@ snapshots:
       - '@types/react-dom'
       - supports-color
 
-  '@anvia/react@1.1.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))(@anvia/core@1.14.1(zod@4.6.7))(react@19.3.0)':
+  '@anvia/react@1.1.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))(@anvia/core@1.17.2(zod@4.6.7))(react@19.3.0)':
     dependencies:
-      '@anvia/client': 1.4.4(@anvia/core@1.14.1(zod@4.6.7))
-      '@anvia/core': 1.14.1(zod@4.6.7)
+      '@anvia/client': 1.6.0(@anvia/core@1.17.2(zod@4.6.7))
+      '@anvia/core': 1.17.2(zod@4.6.7)
       react: 19.3.0
 
-  '@anvia/server@1.3.4(@anvia/client@1.4.4(@anvia/core@1.14.1(zod@4.6.7)))':
+  '@anvia/server@1.3.5(@anvia/client@1.6.0(@anvia/core@1.17.2(zod@4.6.7)))':
     dependencies:
-      '@anvia/client': 1.4.4(@anvia/core@1.14.1(zod@4.6.7))
+      '@anvia/client': 1.6.0(@anvia/core@1.17.2(zod@4.6.7))
 
   '@ark/schema@0.56.7':
     dependencies:
@@ -4793,7 +4790,7 @@ snapshots:
       '@octokit/request-error': 7.1.2
       '@octokit/webhooks-methods': 6.0.0
 
-  '@opentelemetry/api-logs@0.222.0':
+  '@opentelemetry/api-logs@0.223.0':
     dependencies:
       '@opentelemetry/api': 1.9.1
 
@@ -4803,51 +4800,40 @@ snapshots:
     dependencies:
       '@opentelemetry/api': 1.9.1
 
-  '@opentelemetry/core@2.11.0(@opentelemetry/api@1.9.1)':
-    dependencies:
-      '@opentelemetry/api': 1.9.1
-      '@opentelemetry/semantic-conventions': 1.43.0
-
   '@opentelemetry/core@2.12.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
       '@opentelemetry/semantic-conventions': 1.43.0
 
-  '@opentelemetry/exporter-logs-otlp-http@0.222.0(@opentelemetry/api@1.9.1)':
+  '@opentelemetry/exporter-logs-otlp-http@0.223.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/otlp-exporter-base': 0.222.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/otlp-transformer': 0.222.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-logs': 0.222.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/otlp-exporter-base': 0.223.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/otlp-transformer': 0.223.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-logs': 0.223.0(@opentelemetry/api@1.9.1)
 
-  '@opentelemetry/exporter-trace-otlp-http@0.222.0(@opentelemetry/api@1.9.1)':
+  '@opentelemetry/exporter-trace-otlp-http@0.223.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/otlp-exporter-base': 0.222.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/otlp-transformer': 0.222.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-trace': 2.11.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/otlp-exporter-base': 0.223.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/otlp-transformer': 0.223.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-trace': 2.12.0(@opentelemetry/api@1.9.1)
 
-  '@opentelemetry/otlp-exporter-base@0.222.0(@opentelemetry/api@1.9.1)':
+  '@opentelemetry/otlp-exporter-base@0.223.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/core': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/otlp-transformer': 0.222.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/core': 2.12.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/otlp-transformer': 0.223.0(@opentelemetry/api@1.9.1)
 
-  '@opentelemetry/otlp-transformer@0.222.0(@opentelemetry/api@1.9.1)':
+  '@opentelemetry/otlp-transformer@0.223.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/api-logs': 0.222.0
-      '@opentelemetry/core': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/resources': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-logs': 0.222.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-metrics': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/sdk-trace': 2.11.0(@opentelemetry/api@1.9.1)
-
-  '@opentelemetry/resources@2.11.0(@opentelemetry/api@1.9.1)':
-    dependencies:
-      '@opentelemetry/api': 1.9.1
-      '@opentelemetry/core': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/semantic-conventions': 1.43.0
+      '@opentelemetry/api-logs': 0.223.0
+      '@opentelemetry/core': 2.12.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/resources': 2.12.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-logs': 0.223.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-metrics': 2.12.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/sdk-trace': 2.12.0(@opentelemetry/api@1.9.1)
 
   '@opentelemetry/resources@2.12.0(@opentelemetry/api@1.9.1)':
     dependencies:
@@ -4855,19 +4841,19 @@ snapshots:
       '@opentelemetry/core': 2.12.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/semantic-conventions': 1.43.0
 
-  '@opentelemetry/sdk-logs@0.222.0(@opentelemetry/api@1.9.1)':
+  '@opentelemetry/sdk-logs@0.223.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/api-logs': 0.222.0
-      '@opentelemetry/core': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/resources': 2.11.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/api-logs': 0.223.0
+      '@opentelemetry/core': 2.12.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/resources': 2.12.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/semantic-conventions': 1.43.0
 
-  '@opentelemetry/sdk-metrics@2.11.0(@opentelemetry/api@1.9.1)':
+  '@opentelemetry/sdk-metrics@2.12.0(@opentelemetry/api@1.9.1)':
     dependencies:
       '@opentelemetry/api': 1.9.1
-      '@opentelemetry/core': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/resources': 2.11.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/core': 2.12.0(@opentelemetry/api@1.9.1)
+      '@opentelemetry/resources': 2.12.0(@opentelemetry/api@1.9.1)
 
   '@opentelemetry/sdk-trace-base@2.12.0(@opentelemetry/api@1.9.1)':
     dependencies:
@@ -4883,13 +4869,6 @@ snapshots:
       '@opentelemetry/context-async-hooks': 2.12.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/core': 2.12.0(@opentelemetry/api@1.9.1)
       '@opentelemetry/sdk-trace-base': 2.12.0(@opentelemetry/api@1.9.1)
-
-  '@opentelemetry/sdk-trace@2.11.0(@opentelemetry/api@1.9.1)':
-    dependencies:
-      '@opentelemetry/api': 1.9.1
-      '@opentelemetry/core': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/resources': 2.11.0(@opentelemetry/api@1.9.1)
-      '@opentelemetry/semantic-conventions': 1.43.0
 
   '@opentelemetry/sdk-trace@2.12.0(@opentelemetry/api@1.9.1)':
     dependencies:
@@ -6522,7 +6501,7 @@ snapshots:
 
   markdown-table@3.0.4: {}
 
-  marked@18.1.1: {}
+  marked@18.1.2: {}
 
   math-intrinsics@1.1.0: {}
 
@@ -6930,7 +6909,7 @@ snapshots:
       powershell-utils: 0.2.1
       wsl-utils: 1.0.1
 
-  openai@7.32.0(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7):
+  openai@7.45.1(@aws-sdk/credential-provider-node@3.972.86)(@smithy/signature-v4@5.7.4)(undici@7.30.0)(ws@8.22.0)(zod@4.6.7):
     optionalDependencies:
       '@aws-sdk/credential-provider-node': 3.972.86
       '@smithy/signature-v4': 5.7.4
