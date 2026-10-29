@@ -10,7 +10,7 @@ The app is an HR assistant for **PT Maju Jaya Sakti**, a fictional company. Empl
 
 - Structuring a **pnpm workspace** monorepo with apps and shared packages.
 - Building an agent with **`@anvia/core`**: instructions, static context, tools, and a model.
-- Calling models through **OpenRouter** with the OpenAI-compatible client.
+- Calling models through **OpenRouter** (OpenAI-compatible client) or directly through **Anthropic**, and letting the user pick one in the UI.
 - Streaming agent output from a **Hono** API to a **React** UI with `@anvia/server`, `@anvia/client`, `@anvia/react`, and `@anvia/react-ui`.
 - Saving conversations per session with **`@anvia/memory-prisma`**, **Prisma 8**, and **Postgres 16**.
 - Measuring answer quality with **evals**: an LLM judge, answer relevancy, and regex checks.
@@ -26,7 +26,7 @@ API (apps/api, Hono :3000)
    │  runAgent({ messages, memory })
    ▼
 Agent (packages/agents)
-   ├── Model ──────────▶ OpenRouter (openai/gpt-6-luna)
+   ├── Model ──────────▶ OpenRouter (openai/gpt-6-luna) or Anthropic (claude-haiku-5-5)
    ├── Tools ──────────▶ Tavily (search_web, read_webpage)
    ├── Memory ─────────▶ packages/db ──▶ Postgres 16 (Docker :5433)
    └── Tracing ────────▶ Anvia Lens
@@ -37,7 +37,7 @@ Agent (packages/agents)
 ```
 .
 ├── apps/
-│   ├── api/                  Hono API: /chat, /sessions, /sessions/:id/messages
+│   ├── api/                  Hono API: /models, /chat, /sessions, /sessions/:id/messages
 │   └── web/                  React + Vite + Tailwind + TanStack Router (file-based)
 │       └── src/routes/
 │           ├── __root.tsx    Layout and sidebar (session list)
@@ -47,7 +47,7 @@ Agent (packages/agents)
 │   ├── agents/               The HR agent
 │   │   └── src/
 │   │       ├── agent.ts          runAgent(): builds and streams the agent
-│   │       ├── models.ts         getModel(): OpenRouter model
+│   │       ├── models.ts         MODEL_OPTIONS and getModel(): OpenAI or Anthropic model
 │   │       ├── instructions.ts   System prompt
 │   │       ├── lens.ts           Anvia Lens client
 │   │       ├── context/          Static documents (company policy, labor rules)
@@ -66,7 +66,7 @@ Agent (packages/agents)
 - **Node.js 24 or newer** (the scripts use the native `--env-file-if-exists` flag)
 - **pnpm** (this repo was built with pnpm 12)
 - **Docker** for Postgres
-- API keys for **OpenRouter**, **Tavily**, and **Anvia Lens**
+- API keys for **OpenRouter**, **Tavily**, and **Anvia Lens**, plus **Anthropic** if you want to use Claude (optional)
 
 ## Getting started
 
@@ -109,7 +109,8 @@ Agent (packages/agents)
 
 | Variable | Used by | Purpose |
 |---|---|---|
-| `OPENROUTER_API_KEY` | `packages/agents/src/models.ts` | Model calls through OpenRouter |
+| `OPENROUTER_API_KEY` | `packages/agents/src/models.ts` | Model calls through OpenRouter (the OpenAI option) |
+| `ANTHROPIC_API_KEY` | `packages/agents/src/models.ts` | Model calls to Anthropic (the Claude option). Only needed if you pick Claude |
 | `TAVILY_API_KEY` | `packages/agents/src/tools/` | Web search and page reading |
 | `ANVIA_LENS_BASE_URL` | `packages/agents/src/lens.ts` | Lens server URL |
 | `ANVIA_LENS_PUBLIC_KEY` | `packages/agents/src/lens.ts` | Lens credentials |
@@ -122,7 +123,7 @@ Agent (packages/agents)
 
 `runAgent()` in `src/agent.ts` puts the pieces together:
 
-- **Model**: `getModel()` points the `@anvia/openai` client at OpenRouter's OpenAI-compatible endpoint. The default model is `openai/gpt-6-luna`.
+- **Model**: `MODEL_OPTIONS` in `src/models.ts` lists the models a user can choose. `openai` (default) is `openai/gpt-6-luna`: `getModel()` points the `@anvia/openai` client at OpenRouter's OpenAI-compatible endpoint. `anthropic` is `claude-haiku-5-5`, called directly with `@anvia/anthropic`. To add a model, add an entry to `MODEL_OPTIONS`.
 - **Instructions**: `src/instructions.ts` defines the HR assistant's role, source priority, and rules (no invented policies, no sensitive personal data).
 - **Context**: `src/context/` holds static `Document`s attached to every run: company policies and Indonesian labor rules.
 - **Tools**: `search_web` and `read_webpage` use Tavily. The agent uses them only for current figures the context does not cover.
@@ -144,7 +145,8 @@ The database uses **Prisma 8**, where the schema is called a **contract**:
 
 | Method | Path | What it does |
 |---|---|---|
-| `POST` | `/chat?sessionId=…` | Runs the agent with memory for that session and streams the events |
+| `GET` | `/models` | Lists the models a user can pick and the default |
+| `POST` | `/chat?sessionId=…&model=…` | Runs the agent with memory for that session and streams the events. `model` is optional and defaults to `openai`. An unknown value returns 400 |
 | `GET` | `/sessions` | Lists the user's sessions, newest first, titled by the first question |
 | `GET` | `/sessions/:id/messages` | Returns a session's saved messages |
 
@@ -154,6 +156,7 @@ There is one user for now: `default-user`.
 
 - `/` shows only a composer. Sending a message creates a session ID and navigates to `/s/:id`.
 - `/s/:id` loads the saved messages in a route `loader` and passes them to `useChat({ initialMessages })`.
+- A model dropdown in the header (`src/model-picker.tsx`) loads `/models` and sends the choice to `/chat` as `?model=`. It is remembered in `localStorage`.
 - The chat UI uses headless primitives from `@anvia/react-ui`, styled with Tailwind, in dark mode only.
 - Answers stream smoothly. Newly revealed text gets `data-state="revealing"`, and CSS in `src/styles.css` fades it in.
 
@@ -192,7 +195,7 @@ Each file sends its results to Anvia Lens through `runEvalCli({ reporters })`.
 
 ## Troubleshooting
 
-- **`Set OPENROUTER_API_KEY.`** or **`Anvia Lens baseUrl is required`**: the root `.env` is missing or a value is empty. Check that no key appears twice. The last line wins, so an empty duplicate overrides your value.
+- **`Set OPENROUTER_API_KEY.`** or **`Set ANTHROPIC_API_KEY.`** (the key for the model you picked is missing) or **`Anvia Lens baseUrl is required`**: the root `.env` is missing or a value is empty. Check that no key appears twice. The last line wins, so an empty duplicate overrides your value.
 - **Port 5432 already in use**: Postgres is mapped to host port **5433** to avoid clashing with other local databases. Keep `DATABASE_URL` on 5433.
 - **Vite opens on 5174**: port 5173 is taken, so Vite picks the next one. The proxy still works.
 - **`Ignored build scripts` during install**: pnpm blocks dependency install scripts by default. `pnpm-workspace.yaml` allows `esbuild` and denies `workerd`, which this project does not need.
