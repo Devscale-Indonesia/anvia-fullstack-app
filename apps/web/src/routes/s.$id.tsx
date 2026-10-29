@@ -69,7 +69,7 @@ function Chat({ sessionId, initialMessages }: { sessionId: string; initialMessag
   return (
     <main className="flex min-w-0 flex-1 flex-col">
       <header className="flex h-12 items-center px-4 text-sm font-medium text-zinc-400">
-        Anvia HR Assistant
+        Anvia Business Assistant
         <ModelPicker models={models} model={model} onChange={setModel} />
       </header>
 
@@ -124,7 +124,7 @@ function Chat({ sessionId, initialMessages }: { sessionId: string; initialMessag
             <div className="flex items-center gap-2 rounded-3xl border border-zinc-700 bg-zinc-800 p-2 focus-within:border-zinc-500">
               <ComposerPrimitive.Input
                 className="flex-1 bg-transparent px-3 py-2 leading-6 text-zinc-100 outline-none placeholder:text-zinc-500"
-                placeholder="Ask about leave, payroll, BPJS..."
+                placeholder="Ask about leave, payroll, stock, orders..."
               />
               <ComposerPrimitive.Submit className="flex size-10 shrink-0 items-center justify-center rounded-full bg-zinc-100 text-zinc-900 hover:bg-zinc-300 disabled:bg-zinc-600 disabled:text-zinc-400">
                 ↑

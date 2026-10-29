@@ -1,8 +1,8 @@
-# Anvia HR Assistant
+# Anvia Business Assistant
 
 A full-stack AI agent app, built for **Devscale Indonesia — AI Product Engineering, Batch 2**.
 
-The app is an HR assistant for **PT Maju Jaya Sakti**, a fictional company. Employees ask about leave, payroll, BPJS, and working hours in Indonesian or English. The agent answers from company policy and Indonesian labor rules, searches the web when it needs current figures, and remembers each conversation.
+The app is a business assistant for **PT Maju Jaya Sakti**, a fictional company. Employees ask in Indonesian or English about HR topics (leave, payroll, BPJS, working hours) and about business data (products, stock, customers, vendors, orders). The agent answers HR questions from company policy and Indonesian labor rules, reads and updates business data through the ERP MCP server, searches the web when it needs current figures, and remembers each conversation. It asks for confirmation before it changes any ERP record.
 
 > All company policies and labor-rule figures in this repo are **mock data for teaching**. Do not use them for real HR or legal decisions.
 
@@ -44,7 +44,7 @@ Agent (packages/agents)
 │           ├── index.tsx     "/"        New chat composer
 │           └── s.$id.tsx     "/s/:id"   Chat for one session
 ├── packages/
-│   ├── agents/               The HR agent
+│   ├── agents/               The business agent
 │   │   └── src/
 │   │       ├── agent.ts          runAgent(): builds and streams the agent
 │   │       ├── models.ts         MODEL_OPTIONS and getModel(): OpenAI or Anthropic model
@@ -126,7 +126,7 @@ Agent (packages/agents)
 `runAgent()` in `src/agent.ts` puts the pieces together:
 
 - **Model**: `MODEL_OPTIONS` in `src/models.ts` lists the models a user can choose. `openai` (default) is `openai/gpt-6-luna`: `getModel()` points the `@anvia/openai` client at OpenRouter's OpenAI-compatible endpoint. `anthropic` is `claude-haiku-5-5`, called directly with `@anvia/anthropic`. To add a model, add an entry to `MODEL_OPTIONS`.
-- **Instructions**: `src/instructions.ts` defines the HR assistant's role, source priority, and rules (no invented policies, no sensitive personal data).
+- **Instructions**: `src/instructions.ts` defines the business assistant's role, source priority, and rules (no invented policies or ERP data, confirm before changing records, no sensitive personal data).
 - **Context**: `src/context/` holds static `Document`s attached to every run: company policies and Indonesian labor rules.
 - **Tools**: `search_web` and `read_webpage` use Tavily. The agent uses them only for current figures the context does not cover.
 - **Memory** (optional): with `memory: { store, session }`, the agent sends only the latest user message. The store supplies earlier turns.
