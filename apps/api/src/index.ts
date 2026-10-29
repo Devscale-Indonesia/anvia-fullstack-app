@@ -1,5 +1,5 @@
 import { serve } from "@hono/node-server";
-import { runAgent } from "@anvia/agents";
+import { DEFAULT_MODEL_ID, MODEL_OPTIONS, isModelId, runAgent } from "@anvia/agents";
 import { agentToClientStream, parseClientStreamRequest } from "@anvia/client";
 import { createClientStreamResponse } from "@anvia/server";
 import { db } from "@anvia/db";
@@ -44,10 +44,21 @@ app.post("/hello", zValidator("json", helloSchema), (c) => {
   return c.json({ message: `Hello, ${name}!` });
 });
 
+// Models the user can choose from. The id goes back to /chat as ?model=.
+app.get("/models", (c) =>
+  c.json({
+    default: DEFAULT_MODEL_ID,
+    models: MODEL_OPTIONS.map(({ id, label, provider }) => ({ id, label, provider })),
+  }),
+);
+
 app.post("/chat", async (c) => {
   // const route = routeAgent(body.messages) -> "hr" | "finance" | "operations"
   const sessionId = c.req.query("sessionId");
   if (!sessionId) return c.text("sessionId query parameter is required.", 400);
+
+  const modelId = c.req.query("model") ?? DEFAULT_MODEL_ID;
+  if (!isModelId(modelId)) return c.text(`Unknown model "${modelId}".`, 400);
 
   const body = parseClientStreamRequest(await c.req.json());
   if (body.type !== "messages") {
@@ -57,6 +68,7 @@ app.post("/chat", async (c) => {
     events: runAgent({
       messages: body.messages,
       memory: { store: memoryStore, session: scopeFor(sessionId) },
+      modelId,
     }),
   });
   return createClientStreamResponse({ events });

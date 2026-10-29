@@ -1,21 +1,57 @@
+import { AnthropicClient } from "@anvia/anthropic";
 import { OpenAIClient } from "@anvia/openai";
 
-// Canonical OpenRouter model ID.
-export const DEFAULT_MODEL_ID = "openai/gpt-6-luna";
+export type ModelProvider = "openai" | "anthropic";
+
+export type ModelOption = {
+  // Stable key the client sends and the API validates.
+  id: string;
+  label: string;
+  provider: ModelProvider;
+  modelId: string;
+};
+
+export const MODEL_OPTIONS: readonly ModelOption[] = [
+  // Canonical OpenRouter model ID, called through the OpenAI-compatible client.
+  { id: "openai", label: "OpenAI GPT-6 Luna", provider: "openai", modelId: "openai/gpt-6-luna" },
+  { id: "anthropic", label: "Anthropic Claude Haiku 5.5", provider: "anthropic", modelId: "claude-haiku-5-5" },
+];
+
+export const DEFAULT_MODEL_ID = MODEL_OPTIONS[0].id;
 
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
 
-let client: OpenAIClient | undefined;
+let openAIClient: OpenAIClient | undefined;
+let anthropicClient: AnthropicClient | undefined;
 
-function getClient(): OpenAIClient {
-  if (!client) {
+function getOpenAIClient(): OpenAIClient {
+  if (!openAIClient) {
     const apiKey = process.env.OPENROUTER_API_KEY;
     if (!apiKey) throw new Error("Set OPENROUTER_API_KEY.");
-    client = new OpenAIClient({ apiKey, baseUrl: OPENROUTER_BASE_URL });
+    openAIClient = new OpenAIClient({ apiKey, baseUrl: OPENROUTER_BASE_URL });
   }
-  return client;
+  return openAIClient;
 }
 
-export function getModel(modelId: string = DEFAULT_MODEL_ID) {
-  return getClient().completionModel({ modelId, api: "chat" });
+function getAnthropicClient(): AnthropicClient {
+  if (!anthropicClient) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) throw new Error("Set ANTHROPIC_API_KEY.");
+    anthropicClient = new AnthropicClient({ apiKey });
+  }
+  return anthropicClient;
+}
+
+export function isModelId(value: string): boolean {
+  return MODEL_OPTIONS.some((option) => option.id === value);
+}
+
+export function getModel(id: string = DEFAULT_MODEL_ID) {
+  const option = MODEL_OPTIONS.find((candidate) => candidate.id === id);
+  if (!option) throw new Error(`Unknown model "${id}".`);
+
+  if (option.provider === "anthropic") {
+    return getAnthropicClient().completionModel({ modelId: option.modelId });
+  }
+  return getOpenAIClient().completionModel({ modelId: option.modelId, api: "chat" });
 }

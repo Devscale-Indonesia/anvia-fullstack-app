@@ -9,6 +9,7 @@ import {
   ThreadPrimitive,
 } from "@anvia/react-ui";
 import { useEffect, useMemo, useRef } from "react";
+import { ModelPicker, useModelChoice } from "../model-picker";
 
 export const Route = createFileRoute("/s/$id")({
   // Load the saved messages of this session before the page renders.
@@ -30,11 +31,14 @@ function SessionPage() {
 }
 
 function Chat({ sessionId, initialMessages }: { sessionId: string; initialMessages: UIMessage[] }) {
+  const { models, model, setModel } = useModelChoice();
+
   // /api/chat is proxied to the API's /chat route (see vite.config.ts).
-  const transport = useMemo(
-    () => createHttpClientTransport({ endpoint: `/api/chat?sessionId=${encodeURIComponent(sessionId)}` }),
-    [sessionId],
-  );
+  const transport = useMemo(() => {
+    const query = new URLSearchParams({ sessionId });
+    if (model) query.set("model", model);
+    return createHttpClientTransport({ endpoint: `/api/chat?${query}` });
+  }, [sessionId, model]);
   const chat = useChat({ transport, initialMessages });
   const lastMessageId = chat.messages.at(-1)?.id;
 
@@ -66,6 +70,7 @@ function Chat({ sessionId, initialMessages }: { sessionId: string; initialMessag
     <main className="flex min-w-0 flex-1 flex-col">
       <header className="flex h-12 items-center px-4 text-sm font-medium text-zinc-400">
         Anvia HR Assistant
+        <ModelPicker models={models} model={model} onChange={setModel} />
       </header>
 
       <ChatProvider controller={chat}>

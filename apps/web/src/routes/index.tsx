@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
+import { ModelPicker, useModelChoice } from "../model-picker";
 
 declare module "@tanstack/react-router" {
   interface HistoryState {
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/")({
 function NewChat() {
   const navigate = useNavigate();
   const [text, setText] = useState("");
+  const { models, model, setModel } = useModelChoice();
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -29,6 +31,7 @@ function NewChat() {
     <main className="flex min-w-0 flex-1 flex-col">
       <header className="flex h-12 items-center px-4 text-sm font-medium text-zinc-400">
         Anvia HR Assistant
+        <ModelPicker models={models} model={model} onChange={setModel} />
       </header>
 
       <div className="flex flex-1 flex-col items-center justify-center px-4">

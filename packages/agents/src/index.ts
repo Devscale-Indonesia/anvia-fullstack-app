@@ -1,5 +1,12 @@
 export { runAgent, type RunAgentOptions } from "./agent";
-export { getModel, DEFAULT_MODEL_ID } from "./models";
+export {
+  getModel,
+  isModelId,
+  DEFAULT_MODEL_ID,
+  MODEL_OPTIONS,
+  type ModelOption,
+  type ModelProvider,
+} from "./models";
 export { BASE_INSTRUCTIONS } from "./instructions";
 export { staticContext } from "./context/document";
 export { companyPolicyDocuments } from "./context/company-policies";
