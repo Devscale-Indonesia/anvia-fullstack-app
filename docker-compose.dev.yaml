@@ -3,6 +3,7 @@ name: anvia-dev
 services:
   postgres:
     image: postgres:16
+    restart: unless-stopped
     ports:
       - "5433:5432"
     environment:

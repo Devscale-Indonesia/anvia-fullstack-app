@@ -50,12 +50,14 @@ Agent (packages/agents)
 │   │       ├── models.ts         MODEL_OPTIONS and getModel(): OpenAI or Anthropic model
 │   │       ├── instructions.ts   System prompt
 │   │       ├── lens.ts           Anvia Lens client
+│   │       ├── mcp.ts            Connects the MCP servers in mcp.json
 │   │       ├── context/          Static documents (company policy, labor rules)
 │   │       ├── tools/            search-web, read-webpage (Tavily)
 │   │       └── evals/            4 eval files, 5 cases each
 │   └── db/                   Prisma 8 contract and database client
 │       ├── prisma/schema.prisma  Contract (memory models)
 │       └── src/index.ts          exports `db`
+├── mcp.json                  MCP servers the agent can use (see "MCP servers")
 ├── infra/lens/               Optional: self-hosted Anvia Lens (Docker Compose)
 ├── docker-compose.dev.yaml   Postgres 16 for local development
 └── .env.example              Environment variables template
@@ -128,9 +130,31 @@ Agent (packages/agents)
 - **Context**: `src/context/` holds static `Document`s attached to every run: company policies and Indonesian labor rules.
 - **Tools**: `search_web` and `read_webpage` use Tavily. The agent uses them only for current figures the context does not cover.
 - **Memory** (optional): with `memory: { store, session }`, the agent sends only the latest user message. The store supplies earlier turns.
+- **MCP tools**: the API connects the servers in `mcp.json` (see below) and passes them to `runAgent({ mcpServers })`.
+- **Prompt caching**: for the Anthropic model, `getProviderOptions()` sends a top-level `cache_control`, so the instructions, context and tool definitions are cached between requests.
 - **Tracing**: every run is recorded in Anvia Lens with `captureMode: "full"`, which includes prompt and response text.
 
 `runAgent()` returns `agent.stream()`, an async iterable of events.
+
+### MCP servers
+
+`mcp.json` at the repo root registers MCP servers, in the same shape as Claude Code's `mcpServers`:
+
+```json
+{
+  "mcpServers": {
+    "erp": {
+      "type": "http",
+      "url": "https://homelab.tail9a7b40.ts.net:8443/api/mcp",
+      "ssrfProtection": "disabled"
+    }
+  }
+}
+```
+
+- `packages/agents/src/mcp.ts` connects once and reuses the connection. If a server is unreachable, the agent runs without its tools and the next chat tries again.
+- `"ssrfProtection": "disabled"` is needed for servers on a private network such as Tailscale. `@anvia/mcp` blocks private addresses by default.
+- The `erp` server includes write tools (`take_order`, `buy_stock`, `add_customer`, …). The app has no user authentication, so anyone who can open the chat can ask the agent to call them.
 
 ### 2. The database (`packages/db`)
 
@@ -159,6 +183,17 @@ There is one user for now: `default-user`.
 - A model dropdown in the header (`src/model-picker.tsx`) loads `/models` and sends the choice to `/chat` as `?model=`. It is remembered in `localStorage`.
 - The chat UI uses headless primitives from `@anvia/react-ui`, styled with Tailwind, in dark mode only.
 - Answers stream smoothly. Newly revealed text gets `data-state="revealing"`, and CSS in `src/styles.css` fades it in.
+
+## Deploying with Tailscale
+
+The app can run on a server and be served inside your tailnet with `tailscale serve`:
+
+1. Copy the repo, including `.env`, and run `pnpm install` and `pnpm -C apps/web build` on the server. Run `chmod 600 .env`.
+2. Start Postgres and create the tables: `docker compose -f docker-compose.dev.yaml up -d`, then `pnpm -C packages/db db:init`.
+3. Run the API (`PORT=3100 node --env-file-if-exists=../../.env --import tsx src/index.ts` in `apps/api`) and the built web app (`API_URL=http://127.0.0.1:3100 pnpm exec vite preview --host 127.0.0.1` in `apps/web`). Use systemd or another process manager so they restart.
+4. Expose the web app: `tailscale serve --bg --https=10000 http://127.0.0.1:4173`. Pick a port that your other `tailscale serve` entries do not use. `tailscale serve` only allows 443, 8443 and 10000.
+
+`vite preview` serves the build on port 4173 and proxies `/api` to the API (see `preview` in `apps/web/vite.config.ts`). It allows `*.ts.net` hostnames.
 
 ## Evals
 
