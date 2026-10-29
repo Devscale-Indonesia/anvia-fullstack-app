@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "erp": {
+      "type": "http",
+      "url": "https://homelab.tail9a7b40.ts.net:8443/api/mcp",
+      "ssrfProtection": "disabled"
+    }
+  }
+}

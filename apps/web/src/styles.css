@@ -35,3 +35,41 @@ body {
     opacity: 1;
   }
 }
+
+/* Markdown tables: full width of the message, long cells wrap. */
+.message-markdown table {
+  width: 100%;
+  table-layout: auto;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #3f3f46;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.message-markdown th,
+.message-markdown td {
+  padding: 0.5rem 0.875rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #27272a;
+}
+
+.message-markdown th {
+  background-color: #18181b;
+  color: #a1a1aa;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.message-markdown tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.message-markdown tbody tr:hover td {
+  background-color: #18181b;
+}

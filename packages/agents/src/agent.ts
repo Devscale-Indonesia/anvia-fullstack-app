@@ -1,3 +1,4 @@
+import type { McpServer } from "@anvia/mcp";
 import { Agent, type AgentStream, type MemoryScope, type MemoryStore, type Message, type UserMessage } from "@anvia/core";
 import { BASE_INSTRUCTIONS } from "./instructions";
 import { getModel, DEFAULT_MODEL_ID } from "./models";
@@ -14,6 +15,8 @@ export type RunAgentOptions = {
     session: MemoryScope;
   };
   modelId?: string;
+  // Connected MCP servers whose tools the agent can call (see getMcpServers()).
+  mcpServers?: readonly McpServer[];
   maxTurns?: number;
   abortSignal?: AbortSignal;
 };
@@ -25,6 +28,7 @@ export function runAgent(options: RunAgentOptions): AgentStream<string> {
     instructions: BASE_INSTRUCTIONS,
     context: staticContext,
     tools: [searchWebTool, readWebpageTool],
+    mcpServers: options.mcpServers,
     maxTurns: options.maxTurns ?? 25,
     memory: options.memory ? { store: options.memory.store, savePolicy: "turn" } : undefined,
     observability: {

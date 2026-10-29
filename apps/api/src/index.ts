@@ -1,5 +1,5 @@
 import { serve } from "@hono/node-server";
-import { DEFAULT_MODEL_ID, MODEL_OPTIONS, isModelId, runAgent } from "@anvia/agents";
+import { DEFAULT_MODEL_ID, MODEL_OPTIONS, getMcpServers, isModelId, runAgent } from "@anvia/agents";
 import { agentToClientStream, parseClientStreamRequest } from "@anvia/client";
 import { createClientStreamResponse } from "@anvia/server";
 import { db } from "@anvia/db";
@@ -69,6 +69,7 @@ app.post("/chat", async (c) => {
       messages: body.messages,
       memory: { store: memoryStore, session: scopeFor(sessionId) },
       modelId,
+      mcpServers: await getMcpServers(),
     }),
   });
   return createClientStreamResponse({ events });
