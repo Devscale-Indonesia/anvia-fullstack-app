@@ -1,4 +1,5 @@
 import { AnthropicClient } from "@anvia/anthropic";
+import type { JsonObject } from "@anvia/core";
 import { OpenAIClient } from "@anvia/openai";
 
 export type ModelProvider = "openai" | "anthropic";
@@ -54,4 +55,13 @@ export function getModel(id: string = DEFAULT_MODEL_ID) {
     return getAnthropicClient().completionModel({ modelId: option.modelId });
   }
   return getOpenAIClient().completionModel({ modelId: option.modelId, api: "chat" });
+}
+
+// Anthropic automatic prompt caching: one top-level cache_control, and the breakpoint moves forward as
+// the conversation grows. Cached reads need a prompt of at least 512 tokens on Haiku 5.5.
+// https://platform.claude.com/docs/en/build-with-claude/prompt-caching
+export function getProviderOptions(id: string = DEFAULT_MODEL_ID): JsonObject | undefined {
+  const option = MODEL_OPTIONS.find((candidate) => candidate.id === id);
+  if (option?.provider === "anthropic") return { cache_control: { type: "ephemeral" } };
+  return undefined;
 }

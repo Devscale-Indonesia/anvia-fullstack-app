@@ -1,7 +1,7 @@
 import type { McpServer } from "@anvia/mcp";
 import { Agent, type AgentStream, type MemoryScope, type MemoryStore, type Message, type UserMessage } from "@anvia/core";
 import { BASE_INSTRUCTIONS } from "./instructions";
-import { getModel, DEFAULT_MODEL_ID } from "./models";
+import { getModel, getProviderOptions, DEFAULT_MODEL_ID } from "./models";
 import { staticContext } from "./context/document";
 import { getLens } from "./lens";
 import { readWebpageTool } from "./tools/read-webpage";
@@ -22,9 +22,11 @@ export type RunAgentOptions = {
 };
 
 export function runAgent(options: RunAgentOptions): AgentStream<string> {
+  const modelId = options.modelId ?? DEFAULT_MODEL_ID;
   const agent = new Agent({
     id: "anvia-assistant",
-    model: getModel(options.modelId ?? DEFAULT_MODEL_ID),
+    model: getModel(modelId),
+    providerOptions: getProviderOptions(modelId),
     instructions: BASE_INSTRUCTIONS,
     context: staticContext,
     tools: [searchWebTool, readWebpageTool],
